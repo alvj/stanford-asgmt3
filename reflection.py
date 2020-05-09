@@ -14,16 +14,22 @@ from simpleimage import SimpleImage
 
 def make_reflected(filename):
     image = SimpleImage(filename)
-    # TODO: your code here.
-    return image
+    # Create a new blank image with the same width but double the height
+    reflected = SimpleImage.blank(image.width, image.height * 2)
+
+    # Loop through every coordinate in the image
+    for x in range(image.width):
+        for y in range(image.height):
+            # Get the pixel for each x and y coords
+            pixel = image.get_pixel(x, y)
+            # Set that pixel in the same position in the new image and also set it in the reflected position
+            reflected.set_pixel(x, y, pixel)
+            reflected.set_pixel(x, reflected.height - y - 1, pixel)
+
+    return reflected
 
 
 def main():
-    """
-    This program tests your highlight_fires function by displaying
-    the original image of a fire as well as the resulting image
-    from your highlight_fires function.
-    """
     original = SimpleImage('images/mt-rainier.jpg')
     original.show()
     reflected = make_reflected('images/mt-rainier.jpg')
